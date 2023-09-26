@@ -11,6 +11,8 @@
 		F302B72C2AC05BC8009BC603 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F302B72B2AC05BC8009BC603 /* ContentView.swift */; };
 		F302B72E2AC05BC9009BC603 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F302B72D2AC05BC9009BC603 /* Assets.xcassets */; };
 		F302B7312AC05BC9009BC603 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F302B7302AC05BC9009BC603 /* Preview Assets.xcassets */; };
+		F302B7382AC05F4C009BC603 /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F302B7372AC05F4C009BC603 /* FavoriteView.swift */; };
+		F302B73A2AC07618009BC603 /* BasketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F302B7392AC07618009BC603 /* BasketView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		F302B72B2AC05BC8009BC603 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F302B72D2AC05BC9009BC603 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F302B7302AC05BC9009BC603 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F302B7372AC05F4C009BC603 /* FavoriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteView.swift; sourceTree = "<group>"; };
+		F302B7392AC07618009BC603 /* BasketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,8 @@
 			children = (
 				F302B7292AC05BC8009BC603 /* ECommerceApp.swift */,
 				F302B72B2AC05BC8009BC603 /* ContentView.swift */,
+				F302B7372AC05F4C009BC603 /* FavoriteView.swift */,
+				F302B7392AC07618009BC603 /* BasketView.swift */,
 				F302B72D2AC05BC9009BC603 /* Assets.xcassets */,
 				F302B72F2AC05BC9009BC603 /* Preview Content */,
 			);
@@ -137,7 +143,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F302B73A2AC07618009BC603 /* BasketView.swift in Sources */,
 				F302B72C2AC05BC8009BC603 /* ContentView.swift in Sources */,
+				F302B7382AC05F4C009BC603 /* FavoriteView.swift in Sources */,
 				F302B72A2AC05BC8009BC603 /* ECommerceApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

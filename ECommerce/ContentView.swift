@@ -9,13 +9,27 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        TabView {
+            Text("home")
+                .tabItem {
+                    Image(systemName: "house")
+                        
+                }
+            FavoriteView()
+                .tabItem {
+                    Image(systemName: "heart")
+                }
+            Text("my Profile")
+                .tabItem {
+                    Image(systemName: "person")
+                }
+            BasketView()
+                .tabItem {
+                    Image(systemName: "cart")
+                }
         }
-        .padding()
+        .accentColor(.indigo)
+        // 탭 아이콘 뒤에 아우라 effect 처리
     }
 }
 
