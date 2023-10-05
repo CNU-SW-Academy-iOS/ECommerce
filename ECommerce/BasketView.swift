@@ -7,20 +7,14 @@
 
 import SwiftUI
 
-struct Item: Hashable {
-    let image: String
-    let name: String
-    let price: Int
-    var amount: Int
-}
-
 struct BasketView: View {
-    @State var total_price: Int = 0
-//    let data: [Item] = []
-    @State private var dummyDatas: [Item] = [Item(image:"applewatch", name: "애플워치", price: 450, amount: 1),
-                                             Item(image:"applewatch.watchface", name: "애플워치2", price: 150, amount: 2)
-    ]
-
+    @State var amount: Int = 0
+    @State var totalPrice: Int = 0
+    
+    let data: [Item] = [Item(id: "1", image:"applewatch", name: "애플워치", price: 450),
+                        Item(id: "2", image:"applewatch", name: "애플워치", price: 450),
+                        Item(id: "3", image:"applewatch.watchface", name: "애플워치2", price: 150)]
+    
     var body: some View {
         NavigationStack {
             List {
@@ -42,8 +36,32 @@ struct BasketView: View {
                     .frame(width: 300)
                     .padding()
                 }
-                ForEach(dummyDatas, id: \.self) { item in
-                    ItemView(item: item)
+              
+                ForEach(data) { item in
+                    HStack {
+                        Image(systemName: item.image)
+                            .resizable()
+                            .scaledToFit()
+                            .padding(.trailing)
+                        VStack(alignment: .leading) {
+                            Text(item.name)
+                                .bold()
+                            Text("￦\(item.price)k")
+                                .foregroundColor(.indigo)
+                            HStack {
+                                Text("수량")
+                                    .foregroundColor(.secondary)
+                                Stepper(value: $amount, in: 0...10) {
+                                    Text("\(amount)")
+                                }
+                                .onChange(of: amount) { newValue in
+                                    totalPrice = item.price * newValue
+                                }
+                            }
+                        }
+                        .padding()
+                    }
+                    .frame(height: 80)
                 }
             }
             .onAppear {
@@ -60,11 +78,12 @@ struct BasketView: View {
                     }
                 }
             }
+            
             VStack {
                 HStack {
                     Text("총 금액")
                     Spacer()
-                    Text("￦\(total_price)k")
+                    Text("￦\(totalPrice)")
                 }
                 Button {
                     
