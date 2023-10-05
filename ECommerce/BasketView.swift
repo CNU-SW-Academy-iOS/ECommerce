@@ -11,16 +11,20 @@ struct Item: Hashable {
     let image: String
     let name: String
     let price: Int
+    var amount: Int
 }
 
 struct BasketView: View {
-    @State var amount: Int = 0
-    let data: [Item] = [Item(image:"applewatch", name: "애플워치", price: 450)]
+    @State var total_price: Int = 0
 //    let data: [Item] = []
+    @State private var dummyDatas: [Item] = [Item(image:"applewatch", name: "애플워치", price: 450, amount: 1),
+                                             Item(image:"applewatch.watchface", name: "애플워치2", price: 150, amount: 2)
+    ]
+
     var body: some View {
         NavigationStack {
             List {
-                if data.isEmpty {
+                if dummyDatas.isEmpty {
                     VStack {
                         Image(systemName: "person")
                             .resizable()
@@ -38,29 +42,12 @@ struct BasketView: View {
                     .frame(width: 300)
                     .padding()
                 }
-                ForEach(data, id: \.self) { item in
-                    HStack {
-                        Image(systemName: item.image)
-                            .resizable()
-                            .scaledToFit()
-                            .padding(.trailing)
-                        VStack(alignment: .leading) {
-                            Text(item.name)
-                                .bold()
-                            Text("￦\(item.price)k")
-                                .foregroundColor(.indigo)
-                            HStack {
-                                Text("수량")
-                                    .foregroundColor(.secondary)
-                                Stepper(value: $amount) {
-                                    Text("\(amount)")
-                                }
-                            }
-                        }
-                        .padding()
-                    }
-                    .frame(height: 80)
+                ForEach(dummyDatas, id: \.self) { item in
+                    ItemView(item: item)
                 }
+            }
+            .onAppear {
+                // 로컬 데이터 수량 불러오기
             }
             .navigationTitle(Text("장바구니"))
             .toolbar {// 타이틀과 같은 높이로 하는 방법?
@@ -77,7 +64,7 @@ struct BasketView: View {
                 HStack {
                     Text("총 금액")
                     Spacer()
-                    Text("total price")
+                    Text("￦\(total_price)k")
                 }
                 Button {
                     
@@ -94,6 +81,39 @@ struct BasketView: View {
             .padding()
             .background(Color.clear)
         }
+    }
+}
+
+struct ItemView: View {
+    @State var item: Item
+    var body: some View {
+        HStack {
+            Image(systemName: item.image)
+                .resizable()
+                .scaledToFit()
+                .padding(.trailing)
+            VStack(alignment: .leading) {
+                Text(item.name)
+                    .bold()
+                Text("￦\(item.price)k")
+                    .foregroundColor(.indigo)
+                HStack {
+                    Text("수량")
+                        .foregroundColor(.secondary)
+                    Stepper(value: $item.amount, in: 1...10) {
+                        Text("\(item.amount)")
+                    }
+                    .onChange(of: item.amount) { newValue in
+                        BasketView().total_price += newValue*item.price
+                        // 반영이 안됨
+                        item.amount = newValue
+                        
+                    }
+                }
+            }
+            .padding()
+        }
+        .frame(height: 80)
     }
 }
 
