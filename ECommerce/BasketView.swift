@@ -11,8 +11,10 @@ import SwiftUI
 
 struct BasketView: View {
     @State var amount: Int = 0
+    @State var totalPrice: Int = 0
+    
     let data: [Item] = [Item(id: "1", image:"applewatch", name: "애플워치", price: 450)]
-//    let data: [Item] = []
+    
     var body: some View {
         NavigationStack {
             List {
@@ -48,8 +50,11 @@ struct BasketView: View {
                             HStack {
                                 Text("수량")
                                     .foregroundColor(.secondary)
-                                Stepper(value: $amount) {
+                                Stepper(value: $amount, in: 0...10) {
                                     Text("\(amount)")
+                                }
+                                .onChange(of: amount) { newValue in
+                                    totalPrice = item.price * newValue
                                 }
                             }
                         }
@@ -69,11 +74,12 @@ struct BasketView: View {
                     }
                 }
             }
+            
             VStack {
                 HStack {
                     Text("총 금액")
                     Spacer()
-                    Text("total price")
+                    Text("￦\(totalPrice)")
                 }
                 Button {
                     
@@ -92,6 +98,7 @@ struct BasketView: View {
         }
     }
 }
+
 
 struct BasketView_Previews: PreviewProvider {
     static var previews: some View {
