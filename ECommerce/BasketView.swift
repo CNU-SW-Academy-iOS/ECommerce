@@ -7,15 +7,11 @@
 
 import SwiftUI
 
-struct Item: Hashable {
-    let image: String
-    let name: String
-    let price: Int
-}
+
 
 struct BasketView: View {
     @State var amount: Int = 0
-    let data: [Item] = [Item(image:"applewatch", name: "애플워치", price: 450)]
+    let data: [Item] = [Item(id: "1", image:"applewatch", name: "애플워치", price: 450)]
 //    let data: [Item] = []
     var body: some View {
         NavigationStack {
@@ -38,7 +34,7 @@ struct BasketView: View {
                     .frame(width: 300)
                     .padding()
                 }
-                ForEach(data, id: \.self) { item in
+                ForEach(data) { item in
                     HStack {
                         Image(systemName: item.image)
                             .resizable()
