@@ -61,6 +61,8 @@ struct CategoryView: View {
     
 }
 
-#Preview {
-    CategoryView()
+struct CategoryView_Previews: PreviewProvider {
+    static var previews: some View {
+        CategoryView()
+    }
 }

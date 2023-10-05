@@ -18,7 +18,7 @@ struct BasketView: View {
     var body: some View {
         NavigationStack {
             List {
-                if dummyDatas.isEmpty {
+                if data.isEmpty {
                     VStack {
                         Image(systemName: "person")
                             .resizable()
@@ -103,38 +103,38 @@ struct BasketView: View {
     }
 }
 
-struct ItemView: View {
-    @State var item: Item
-    var body: some View {
-        HStack {
-            Image(systemName: item.image)
-                .resizable()
-                .scaledToFit()
-                .padding(.trailing)
-            VStack(alignment: .leading) {
-                Text(item.name)
-                    .bold()
-                Text("￦\(item.price)k")
-                    .foregroundColor(.indigo)
-                HStack {
-                    Text("수량")
-                        .foregroundColor(.secondary)
-                    Stepper(value: $item.amount, in: 1...10) {
-                        Text("\(item.amount)")
-                    }
-                    .onChange(of: item.amount) { newValue in
-                        BasketView().total_price += newValue*item.price
-                        // 반영이 안됨
-                        item.amount = newValue
-                        
-                    }
-                }
-            }
-            .padding()
-        }
-        .frame(height: 80)
-    }
-}
+//struct ItemView: View {
+//    @State var item: Item
+//    var body: some View {
+//        HStack {
+//            Image(systemName: item.image)
+//                .resizable()
+//                .scaledToFit()
+//                .padding(.trailing)
+//            VStack(alignment: .leading) {
+//                Text(item.name)
+//                    .bold()
+//                Text("￦\(item.price)k")
+//                    .foregroundColor(.indigo)
+//                HStack {
+//                    Text("수량")
+//                        .foregroundColor(.secondary)
+//                    Stepper(value: $item.amount, in: 1...10) {
+//                        Text("\(item.amount)")
+//                    }
+//                    .onChange(of: item.amount) { newValue in
+//                        BasketView().total_price += newValue*item.price
+//                        // 반영이 안됨
+//                        item.amount = newValue
+//                        
+//                    }
+//                }
+//            }
+//            .padding()
+//        }
+//        .frame(height: 80)
+//    }
+//}
 
 struct BasketView_Previews: PreviewProvider {
     static var previews: some View {
