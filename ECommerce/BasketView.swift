@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct BasketView: View {
-    @State var amount: Int = 0
-    @State var totalPrice: Int = 0
+    @State private var totalPrice: Int = 0
     
-    let data: [Item] = [Item(id: "1", image:"applewatch", name: "애플워치", price: 450),
-                        Item(id: "2", image:"applewatch", name: "애플워치", price: 450),
-                        Item(id: "3", image:"applewatch.watchface", name: "애플워치2", price: 150)]
+    @State var data: [Item] = [Item(id: "1", image:"applewatch", name: "애플워치", price: 450, amount: 0),
+                               Item(id: "2", image:"applewatch", name: "애플워치", price: 450, amount: 0),
+                               Item(id: "3", image:"applewatch.watchface", name: "애플워치2", price: 150, amount: 0)]
     
     var body: some View {
         NavigationStack {
@@ -36,7 +35,7 @@ struct BasketView: View {
                     .frame(width: 300)
                     .padding()
                 }
-              
+                
                 ForEach(data) { item in
                     HStack {
                         Image(systemName: item.image)
@@ -51,12 +50,14 @@ struct BasketView: View {
                             HStack {
                                 Text("수량")
                                     .foregroundColor(.secondary)
-                                Stepper(value: $amount, in: 0...10) {
-                                    Text("\(amount)")
-                                }
-                                .onChange(of: amount) { newValue in
-                                    totalPrice = item.price * newValue
-                                }
+                                Stepper(value: Binding(
+                                    get: { data[data.firstIndex(where: {$0.id == item.id})!].amount ?? 0 },
+                                    set: { newValue in
+                                        let oldValue = data[data.firstIndex(where: {$0.id == item.id})!].amount ?? 0
+                                        data[data.firstIndex(where: {$0.id == item.id})!].amount = newValue
+                                        totalPrice += (newValue - oldValue) * item.price }), in: 0...10) {
+                                            Text("\(item.amount ?? 0)")
+                                        }
                             }
                         }
                         .padding()
@@ -68,7 +69,7 @@ struct BasketView: View {
                 // 로컬 데이터 수량 불러오기
             }
             .navigationTitle(Text("장바구니"))
-            .toolbar {// 타이틀과 같은 높이로 하는 방법?
+            .toolbar {
                 ToolbarItem {
                     Button {
                         
@@ -102,39 +103,6 @@ struct BasketView: View {
         }
     }
 }
-
-//struct ItemView: View {
-//    @State var item: Item
-//    var body: some View {
-//        HStack {
-//            Image(systemName: item.image)
-//                .resizable()
-//                .scaledToFit()
-//                .padding(.trailing)
-//            VStack(alignment: .leading) {
-//                Text(item.name)
-//                    .bold()
-//                Text("￦\(item.price)k")
-//                    .foregroundColor(.indigo)
-//                HStack {
-//                    Text("수량")
-//                        .foregroundColor(.secondary)
-//                    Stepper(value: $item.amount, in: 1...10) {
-//                        Text("\(item.amount)")
-//                    }
-//                    .onChange(of: item.amount) { newValue in
-//                        BasketView().total_price += newValue*item.price
-//                        // 반영이 안됨
-//                        item.amount = newValue
-//                        
-//                    }
-//                }
-//            }
-//            .padding()
-//        }
-//        .frame(height: 80)
-//    }
-//}
 
 struct BasketView_Previews: PreviewProvider {
     static var previews: some View {

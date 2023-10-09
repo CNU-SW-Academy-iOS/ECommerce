@@ -13,4 +13,5 @@ struct Item: Identifiable, Codable {
     var name: String
     var model: String? = nil
     var price: Int
+    var amount: Int?
 }

@@ -55,7 +55,10 @@ struct ProfileView: View {
                     Text("Notifications")
                 }
             }
-            .listRowSpacing(30)
+            .listRowInsets(.init(top: 0,
+                                 leading: 25,
+                                 bottom: 0,
+                                 trailing: 0))
             .navigationTitle("My Profile")
             
         }
