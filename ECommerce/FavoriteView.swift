@@ -7,16 +7,11 @@
 
 import SwiftUI
 
-struct Favorite: Hashable {
-    let image: String
-    let name: String
-    let info: String
-    let type: String
-}
-
 struct FavoriteView: View {
-    let data: [Favorite] = [Favorite(image:"applewatch", name: "애플워치", info: "Series 6: Red", type: "웨어러블")]
-//    let data: [Favorite] = []
+    @State private var isFavorite: Bool = true
+    let data: [Item] = [Item(id: "1", image:"applewatch", name: "애플워치", model: "Series 6: Red", type: "웨어러블", price: 450),
+                        Item(id: "2", image:"applewatch.watchface", name: "갤럭시워치", model: "Gear Black", type: "웨어러블", price: 180)]
+//    let data: [Item] = []
     var body: some View {
         NavigationStack {
             List {
@@ -37,25 +32,47 @@ struct FavoriteView: View {
                     .listRowBackground(Color.clear)
                     .frame(width: 300)
                     .padding()
-                }
-                ForEach(data, id: \.self) { item in
-                    HStack {
-                        Image(systemName: item.image)
-                            .resizable()
-                            .scaledToFit()
-                            .padding(.trailing)
-                        VStack(alignment: .leading) {
-                            Text(item.name)
-                                .bold()
-                            Text(item.info)
-                                .foregroundColor(.indigo)
-                            Text("Type \(item.type)")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+                } else {
+                    ForEach(data) { item in
+                        Section {
+                            ZStack(alignment: .leading) {
+                                HStack {
+                                    Image(systemName: item.image)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .padding(.trailing)
+                                    VStack(alignment: .leading) {
+                                        Text(item.name)
+                                            .bold()
+                                        Text(item.model ?? "fail")
+                                            .foregroundColor(.indigo)
+                                        Text("Type \(item.type ?? "fail")")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    }
+                                    .padding()
+                                }
+                                .frame(height: 80)
+                                NavigationLink {
+                                    ItemDetailView(item: item)
+                                        .toolbar {
+                                            ToolbarItem {
+                                                Button {
+                                                    // add favorite list
+                                                    isFavorite.toggle()
+                                                } label: {
+                                                    Image(systemName: "heart.fill")
+                                                        .foregroundColor(isFavorite ? .pink : .black)
+                                                }
+                                            }
+                                        }
+                                } label: {
+                                    EmptyView()
+                                }
+                                .opacity(0.0)
+                            }
                         }
-                        .padding()
                     }
-                    .frame(height: 80)
                 }
             }
             .navigationTitle(Text("찜하기"))

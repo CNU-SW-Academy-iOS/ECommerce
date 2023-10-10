@@ -34,36 +34,38 @@ struct BasketView: View {
                     .listRowBackground(Color.clear)
                     .frame(width: 300)
                     .padding()
-                }
-                
-                ForEach(data) { item in
-                    HStack {
-                        Image(systemName: item.image)
-                            .resizable()
-                            .scaledToFit()
-                            .padding(.trailing)
-                        VStack(alignment: .leading) {
-                            Text(item.name)
-                                .bold()
-                            Text("￦\(item.price)k")
-                                .foregroundColor(.indigo)
+                } else {
+                    ForEach(data) { item in
+                        Section {
                             HStack {
-                                Text("수량")
-                                    .foregroundColor(.secondary)
-                                Stepper(value: Binding(
-                                    get: { data[data.firstIndex(where: {$0.id == item.id})!].amount ?? 0 },
-                                    set: { newValue in
-                                        let oldValue = data[data.firstIndex(where: {$0.id == item.id})!].amount ?? 0
-                                        data[data.firstIndex(where: {$0.id == item.id})!].amount = newValue
-                                        totalPrice += (newValue - oldValue) * item.price }), in: 0...10) {
-                                            Text("\(item.amount ?? 0)")
-                                        }
+                                Image(systemName: item.image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .padding(.trailing)
+                                VStack(alignment: .leading) {
+                                    Text(item.name)
+                                        .bold()
+                                    Text("￦\(item.price)k")
+                                        .foregroundColor(.indigo)
+                                    HStack {
+                                        Text("수량")
+                                            .foregroundColor(.secondary)
+                                        Stepper(value: Binding(
+                                            get: { data[data.firstIndex(where: {$0.id == item.id})!].amount ?? 0 },
+                                            set: { newValue in
+                                                let oldValue = data[data.firstIndex(where: {$0.id == item.id})!].amount ?? 0
+                                                data[data.firstIndex(where: {$0.id == item.id})!].amount = newValue
+                                                totalPrice += (newValue - oldValue) * item.price }), in: 0...10) {
+                                                    Text("\(item.amount ?? 0)")
+                                                }
+                                    }
+                                }
+                                .padding()
                             }
-                        }
-                        .padding()
+                            .frame(height: 80)
+                        }  
                     }
-                    .frame(height: 80)
-                }
+                }         
             }
             .onAppear {
                 // 로컬 데이터 수량 불러오기
