@@ -12,6 +12,7 @@ struct Item: Identifiable, Codable {
     var image: String
     var name: String
     var model: String? = nil
+    var type: String?
     var price: Int
     var amount: Int?
 }
