@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BasketView: View {
     @State private var totalPrice: Int = 0
+    @State private var hasPayed: Bool = false
     
     @State var data: [Item] = [Item(id: "1", image:"applewatch", name: "애플워치", price: 450, amount: 0),
                                Item(id: "2", image:"applewatch", name: "애플워치", price: 450, amount: 0),
@@ -89,7 +90,7 @@ struct BasketView: View {
                     Text("￦\(totalPrice)")
                 }
                 Button {
-                    
+                    hasPayed.toggle()
                 } label: {
                     Text("결제하기")
                         .foregroundColor(.white)
@@ -97,6 +98,15 @@ struct BasketView: View {
                         .buttonStyle(.plain)
                         .background(.indigo)
                         .cornerRadius(12)
+                }
+                .alert(isPresented: $hasPayed) {
+                    Alert(title: Text("결제하기"),
+                          message: Text("총 ￦\(totalPrice)을 결제 하시겠습니까?"),
+                          primaryButton: Alert.Button.default(Text("네")) {
+                        // 결제 내역에 추가
+                        print("결제완료")
+                    },
+                    secondaryButton: Alert.Button.destructive(Text("아니요")))
                 }
                 .padding()
             }
