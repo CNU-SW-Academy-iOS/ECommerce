@@ -11,13 +11,12 @@ struct BasketView: View {
     @State private var totalPrice: Int = 0
     @State private var hasPayed: Bool = false
     
-    @State var data: [Item] = [Item(id: "1", image:"applewatch", name: "애플워치", price: 450, amount: 0),
-                               Item(id: "2", image:"applewatch", name: "애플워치", price: 450, amount: 0),
-                               Item(id: "3", image:"applewatch.watchface", name: "애플워치2", price: 150, amount: 0)]
-    
+    @StateObject private var manager = ItemManager.shared
+   
     var body: some View {
         NavigationStack {
             List {
+                var data: [Item] = manager.getBasketList()
                 if data.isEmpty {
                     VStack {
                         Image(systemName: "person")

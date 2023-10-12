@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct TabBarView: View {
-    //    let colors: [Color] = [ .blue, .yellow, .green, .purple]
-    
-    var tabbarItems: [String]
+    var tabbarItems: [ItemCategory]
     
     @Binding var selectedIndex: Int
     
@@ -19,7 +17,7 @@ struct TabBarView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(tabbarItems.indices, id: \.self) { index in
-                        Text(tabbarItems[index])
+                        Text(tabbarItems[index].rawValue)
                             .font(.subheadline)
                             .padding(.horizontal)
                             .padding(.vertical, 4)
@@ -44,6 +42,7 @@ struct TabBarView: View {
 struct HomeView: View {
     @State var input: String = ""
     @State private var selectedTab: Int = 0
+    @StateObject var manager = ItemManager.shared
     
     let tabBarItems : [String] = ["웨어러블", "노트북", "핸드폰", "태블릿"]
     
@@ -67,6 +66,7 @@ struct HomeView: View {
                     .fontWeight(.bold)
                     .padding()
                 
+                let tabBarItems = ItemCategory.allCases
                 TabBarView(tabbarItems: tabBarItems, selectedIndex: $selectedTab)
                 
                 TabView(selection: $selectedTab,

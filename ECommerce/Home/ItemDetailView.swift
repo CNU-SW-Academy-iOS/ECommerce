@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct ItemDetailView: View {
-    @State private var isWish: Bool = false
+    @State private var isAdd: Bool = false
+    @StateObject var manager = ItemManager.shared
     var item: Item
     
     var body: some View {
+        
         VStack {
             Spacer()
             Image(systemName: item.image)
@@ -51,9 +53,10 @@ struct ItemDetailView: View {
                     .padding()
                     
                     Button {
-                        isWish = true
+                        manager.addBasket(item)
+                        isAdd = true
                     } label: {
-                        Text(isWish ? "장바구니에 담기" : "담겼습니다")
+                        Text(isAdd ? "담겼습니다" : "장바구니에 담기")
                             .foregroundColor(.white)
                             .frame(width: 330, height: 50)
                     }
@@ -65,14 +68,14 @@ struct ItemDetailView: View {
             .background(.ultraThinMaterial)
             
             Spacer()
+            
         }
-        
     }
 }
 
 struct ItemDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ItemDetailView(item: Item(id: "1", image: "applewatch", name: "애플워치", price: 450))
+        ItemDetailView(item: Item(id: 1, image: "applewatch", name: "애플워치", price: 450, wish: true))
     }
 }
 
