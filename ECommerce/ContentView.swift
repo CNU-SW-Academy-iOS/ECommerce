@@ -13,7 +13,6 @@ struct ContentView: View {
             HomeView()
                 .tabItem {
                     Image(systemName: "house")
-                        
                 }
             FavoriteView()
                 .tabItem {

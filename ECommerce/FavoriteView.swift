@@ -9,12 +9,13 @@ import SwiftUI
 
 struct FavoriteView: View {
     @State private var isFavorite: Bool = true
-    let data: [Item] = [Item(id: "1", image:"applewatch", name: "애플워치", model: "Series 6: Red", type: "웨어러블", price: 450),
-                        Item(id: "2", image:"applewatch.watchface", name: "갤럭시워치", model: "Gear Black", type: "웨어러블", price: 180)]
-//    let data: [Item] = []
+    
+    @StateObject private var manager = ItemManager.shared
+    
     var body: some View {
         NavigationStack {
             List {
+                let data: [Item] = manager.getWishList()
                 if data.isEmpty {
                     VStack {
                         Image(systemName: "person")

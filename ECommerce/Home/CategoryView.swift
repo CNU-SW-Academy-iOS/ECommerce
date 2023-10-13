@@ -8,32 +8,25 @@
 import SwiftUI
 
 struct CategoryView: View {
-    @State private var isFavorite: Bool = false
+//    @State private var isFavorite: Bool = false
     
-    var itemList: [Item] = [
-        Item(id: "1", image:"applewatch", name: "애플워치", price: 450),
-        Item(id: "2", image:"applepencil", name: "애플펜슬", price: 100),
-        Item(id: "3", image:"appletv.fill", name: "애플tv", price: 100),
-        Item(id: "4", image:"homepodmini.fill", name: "애플홈팟", price: 100),
-        Item(id: "5", image:"iphone.gen1", name: "아이폰", price: 100)
-    ]
-    
+    @StateObject private var manager = ItemManager.shared
+        
     var rows: [GridItem] = Array(repeating: .init(.fixed(50)), count: 1)
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHGrid(rows: rows, content: {
-                ForEach(itemList) { item in
+                ForEach(manager.getList()) { item in
                     NavigationLink {
                         ItemDetailView(item: item)
                             .toolbar {
                                 ToolbarItem {
                                     Button {
-                                        // add favorite list
-                                        isFavorite.toggle()
+                                        manager.toggleWish(item)
                                     } label: {
                                         Image(systemName: "heart.fill")
-                                            .foregroundColor(isFavorite ? .pink : .black)
+                                            .foregroundColor(item.wish ? .pink : .black)
                                     }
                                 }
                             }
@@ -50,15 +43,15 @@ struct CategoryView: View {
                         .padding()
                         .background(
                             RoundedRectangle(cornerRadius: 20)
-                                .foregroundColor(.gray)
+                                .foregroundColor(.clear)
                         )
                         .foregroundColor(.primary)
                     }
                 }
             })
         }
+        .padding()
     }
-    
 }
 
 struct CategoryView_Previews: PreviewProvider {
