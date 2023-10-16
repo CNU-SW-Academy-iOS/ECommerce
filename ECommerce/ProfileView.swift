@@ -21,7 +21,7 @@ struct ProfileView: View {
                 address: $address,
                 isActionSheetPresented: $isActionSheetPresented
             )
-            .navigationBarTitle("My Profile")
+            .navigationBarTitle("My Profile fdfdfd")
         }
     }
 }
