@@ -63,7 +63,7 @@ class ItemManager: ObservableObject {
         return wishList
     }
     
-    func addBasket(_ item: Item) {
+    func addBasket(_ item: Item) {// 해당 id가 있으면 추가하지 못하게
         basketList.append(item)
     }
     
@@ -83,6 +83,9 @@ class ItemManager: ObservableObject {
     func updateItem(_ item: Item) {
         if let index = itemList.firstIndex(where: { $0.id == item.id }) {
             itemList[index] = item
+        }
+        if let index = wishList.firstIndex(where: { $0.id == item.id }) {
+            wishList[index] = item
         }
     }
     
