@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoriteView: View {
-    @State private var isFavorite: Bool = true
+//    @State private var isFavorite: Bool = true
     
     @StateObject private var manager = ItemManager.shared
     
@@ -59,11 +59,13 @@ struct FavoriteView: View {
                                         .toolbar {
                                             ToolbarItem {
                                                 Button {
-                                                    // add favorite list
-                                                    isFavorite.toggle()
+                                                    // update wish list
+                                                    manager.toggleWish(item)
+                                                    // 없어진 item을 그리기 때문에 하트를 눌러도 바뀌는 것이 보이지 않음
+                                                    // 뒤로 나와보면 item은 삭제 됨
                                                 } label: {
                                                     Image(systemName: "heart.fill")
-                                                        .foregroundColor(isFavorite ? .pink : .black)
+                                                        .foregroundColor(item.wish ? .pink : .black)
                                                 }
                                             }
                                         }
@@ -77,10 +79,10 @@ struct FavoriteView: View {
                 }
             }
             .navigationTitle(Text("찜하기"))
-            .toolbar {// 타이틀과 같은 높이로 하는 방법?
+            .toolbar {
                 ToolbarItem {
                     Button {
-                        
+                        manager.wishList = []
                     } label: {
                         Image(systemName: "bag")
                             .foregroundColor(.orange)
